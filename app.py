@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify, request
 from models import db, connect_db, Cupcake
 
 app = Flask(__name__)
@@ -18,6 +18,33 @@ def show_cupcakes():
 
 
 @app.route('/api/cupcakes')
-def show_cupcakes():
+def get_cupcakes():
     cupcakes = Cupcake.query.all()
-    return jsonify(cupcake.serialize())
+    serialized_cupcake = [cupcake.serialize() for cupcake in cupcakes]
+    return jsonify(cupcake = serialized_cupcake)
+
+
+@app.route('/api/cupcakes/<int:id>')
+def get_cupcake(id):
+    cupcake = Cupcake.query.get_or_404(id)
+    serialized_cupcake = cupcake.serialize()
+    return jsonify(cupcake=serialized_cupcake)
+
+
+@app.route('/api/cupcakes', methods=["POST"])
+def add_cupcake():
+    """Adding a new cupcake to the list and responding with json"""
+    flavor = request.json['flavor']
+    size = request.json['size']
+    rating = request.json['rating']
+    image = request.json.get('image')
+
+    new_cupcake = Cupcake(flavor=flavor, size=size, rating=rating, image=image or None)
+
+    db.session.add(new_cupcake)
+    db.session.commit()
+   
+    response = jsonify(cupcake=new_cupcake.serialize())
+   
+    response.headers['Content-Type'] = 'application/json'
+    return (response, 201)
