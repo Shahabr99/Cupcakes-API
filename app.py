@@ -13,12 +13,12 @@ connect_db(app)
 
 @app.route('/')
 def show_cupcakes():
-     cupcakes = Cupcake.query.all()
-     return render_template('home.html', cupcakes=cupcakes)
+     
+     return render_template('home.html')
 
 
 @app.route('/api/cupcakes')
-def get_cupcakes():
+def list_cupcakes():
     cupcakes = Cupcake.query.all()
     serialized_cupcake = [cupcake.serialize() for cupcake in cupcakes]
     return jsonify(cupcake = serialized_cupcake)
@@ -32,7 +32,7 @@ def get_cupcake(id):
 
 
 @app.route('/api/cupcakes', methods=["POST"])
-def add_cupcake():
+def create_cupcake():
     """Adding a new cupcake to the list and responding with json"""
     flavor = request.json['flavor']
     size = request.json['size']
@@ -65,3 +65,14 @@ def update_cupcake(id):
 
     response = jsonify(altered_cupcake.serialize())
     return response
+
+
+@app.route('/api/cupcakes/<int:id>')
+def delete_cupcake(id):
+    """deleting a cupcake from database"""
+    cupcake = Cupcake.query.get_or_404(id)
+
+    db.session.delete(cupcake)
+    db.session.commit()
+
+    return jsonify(message='Deleted')

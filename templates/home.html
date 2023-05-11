@@ -4,7 +4,46 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>List of cupcakes</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+      crossorigin="anonymous"
+    />
+    <script defer src="/static/app.js"></script>
   </head>
-  <body></body>
+  <body>
+    <div>
+      <ul>
+        {% for cupcake in cupcakes %}
+        <li>{{cupcake.flavor}}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    <main class="col-md-6 d-flex justify-content-start border m-5">
+      <form class="d-flex flex-column gap-4 col-md-4" action="" method="POST">
+        <label for="flavor"
+          >Flavor:
+          <input type="text" name="flavor" id="flavor" required />
+        </label>
+        <label for="size"
+          >Size:
+          <input type="text" name="size" id="size" required />
+        </label>
+        <label for="rating"
+          >Rating:
+          <input type="text" name="rating" id="rating" />
+        </label>
+        <label for="image"
+          >Imge URL:
+          <input type="text" name="image" id="image" />
+        </label>
+        <button class="btn btn-outline-success btn-sm" type="submit">
+          Submit
+        </button>
+        <a class="btn btn-sm btn-secondary" href="#" role="button">Cancel</a>
+      </form>
+    </main>
+  </body>
 </html>
