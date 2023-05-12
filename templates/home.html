@@ -11,18 +11,24 @@
       integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
       crossorigin="anonymous"
     />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"
+    ></script>
+    <script
+      defer
+      src="https://code.jquery.com/jquery-3.6.4.min.js"
+      integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+      crossorigin="anonymous"
+    ></script>
     <script defer src="/static/app.js"></script>
   </head>
   <body>
     <div>
-      <ul>
-        {% for cupcake in cupcakes %}
-        <li>{{cupcake.flavor}}</li>
-        {% endfor %}
-      </ul>
+      <ul class="list"></ul>
     </div>
     <main class="col-md-6 d-flex justify-content-start border m-5">
-      <form class="d-flex flex-column gap-4 col-md-4" action="" method="POST">
+      <form class="cupcake-form d-flex flex-column gap-4 col-md-4">
         <label for="flavor"
           >Flavor:
           <input type="text" name="flavor" id="flavor" required />
